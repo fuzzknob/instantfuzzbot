@@ -25,7 +25,7 @@ export function start({
 
   server.get('/', async (req, res) => {
     if (await userService.hasLoggedIn()) {
-      return res.render('index')
+      return res.render('index', spotifyService.getCurrentPlayingSong())
     }
     res.redirect('/auth')
   })
@@ -58,6 +58,12 @@ export function start({
   })
 
   const httpServer = http.createServer(server)
+
+  const io = new Server(httpServer)
+
+  spotifyService.listenSongChange((song) => {
+    io.emit('song-change', song)
+  })
 
   httpServer.listen(PORT, null, () => {
     console.log(`Started server at http://localhost:${PORT}`)

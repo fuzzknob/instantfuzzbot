@@ -172,14 +172,13 @@ export default class SpotifyService {
             }
           }
         )
-        console.log()
         const spotifySong: SpotifySong = {
           id: item.id,
           song: item.name,
           artist: item.artists.map(artist => artist.name).join(', '),
           album: {
             name: item.album.name,
-            albumArt: item.album.images.find(img => img.height === 64)?.url || '',
+            albumArt: item.album.images.find(img => img.height === 300)?.url || '',
           },
         }
         if (!this.currentSong) {
