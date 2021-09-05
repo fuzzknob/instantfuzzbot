@@ -5,9 +5,7 @@ import path from 'path'
 import SpotifyService from './services/spotify.service'
 import UserService from './services/user.service'
 
-import { getEnvValue } from './libs/utils'
-
-const PORT = getEnvValue('PORT')
+const PORT = 8000
 
 interface ServerProps {
   userService: UserService

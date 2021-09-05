@@ -10,7 +10,7 @@ const SPOTIFY_AUTH_URL = 'https://accounts.spotify.com'
 const SPOTIFY_CLIENT_ID = getEnvValue('SPOTIFY_CLIENT_ID')
 const SPOTIFY_CLIENT_SECRET = getEnvValue('SPOTIFY_CLIENT_SECRET')
 
-const PORT = getEnvValue('PORT')
+const SERVER_URL = getEnvValue('SERVER_URL')
 
 const SCOPES = 'user-read-currently-playing'
 
@@ -94,7 +94,7 @@ export default class SpotifyService {
       response_type: 'code',
       client_id: SPOTIFY_CLIENT_ID,
       scope: SCOPES,
-      redirect_uri: `http://localhost:${PORT}/callback/`,
+      redirect_uri: `${SERVER_URL}/callback`,
     })
     return `${SPOTIFY_AUTH_URL}/authorize?${query}`
   }
@@ -108,7 +108,7 @@ export default class SpotifyService {
       }>(`${SPOTIFY_AUTH_URL}/api/token`, null, {
         params: {
           code,
-          redirect_uri: `http://localhost:${PORT}/callback/`,
+          redirect_uri: `${SERVER_URL}/callback`,
           grant_type: 'authorization_code',
         },
         headers: {
