@@ -26,38 +26,39 @@
 </head>
 
 <body>
-  <main class="w-screen h-screen flex justify-center items-center">
+  <main id="main" class="w-screen h-screen flex justify-center items-center <%= !song && 'hidden' %>">
     <div class="player rounded-md flex items-center p-3 shadow-md">
       <div class="album-art">
-        <img id="album-art" class="w-full rounded" src="<%= album.albumArt %>" alt="album-art">
+        <img id="album-art" class="w-full rounded" src="<%= song && song.album.albumArt %>" alt="album-art">
       </div>
-      <div class="pl-3">
+      <div class="pl-4">
         <h5 class="text-sm text-gray-500 font-light italic text-right -mt-3 -mb-1">Now Playing</h5>
         <h1 id="song-title" style="width: 255px; font-size: 22px;"
           class="overflow-ellipsis overflow-hidden whitespace-nowrap font-bold text -mb-1">
-          <%= song %>
+          <%= song && song.song %>
         </h1>
         <h3 id="artist-name" style=" width: 255px; font-size: 15px;"
           class="overflow-ellipsis overflow-hidden whitespace-nowrap text-gray-700">
-          <%= artist %>
+          <%= song && song.artist %>
         </h3>
       </div>
     </div>
   </main>
-
   <script src="https://cdn.socket.io/4.1.2/socket.io.min.js"
     integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg"
     crossorigin="anonymous"></script>
   <script>
     const socket = io()
-    const songTitle = document.getElementById('song-title')
-    const artistName = document.getElementById('artist-name')
-    const albumArt = document.getElementById('album-art')
+    const mainElement = document.getElementById('main')
+    const songTitleElement = document.getElementById('song-title')
+    const artistNameElement = document.getElementById('artist-name')
+    const albumArtElement = document.getElementById('album-art')
 
     socket.on('song-change', (song) => {
-      songTitle.innerText = song.song
-      artistName.innerText = song.artist
-      albumArt.src = song.album.albumArt
+      songTitleElement.innerText = song.song
+      artistNameElement.innerText = song.artist
+      albumArtElement.src = song.album.albumArt
+      mainElement.classList.remove('hidden')
     })
   </script>
 </body>

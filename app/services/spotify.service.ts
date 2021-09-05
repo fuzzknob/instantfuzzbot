@@ -172,6 +172,9 @@ export default class SpotifyService {
             }
           }
         )
+        if (!item) {
+          continue
+        }
         const spotifySong: SpotifySong = {
           id: item.id,
           song: item.name,

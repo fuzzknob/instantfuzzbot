@@ -23,7 +23,7 @@ export function start({
 
   server.get('/', async (req, res) => {
     if (await userService.hasLoggedIn()) {
-      return res.render('index', spotifyService.getCurrentPlayingSong())
+      return res.render('index', { song: spotifyService.getCurrentPlayingSong() })
     }
     res.redirect('/auth')
   })
